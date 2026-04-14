@@ -1,4 +1,26 @@
 # ============================================================
+# Project Overview
+# ============================================================
+# In this task, I built a Convolutional Neural Network (CNN)
+# for image classification using the MNIST dataset.
+#
+# First, I loaded the dataset and performed preprocessing by
+# normalizing pixel values and reshaping the data to fit the
+# CNN input format.
+#
+# Then, I built a CNN model with convolutional layers,
+# ReLU activation, max pooling layers, and a fully connected
+# layer with dropout to reduce overfitting.
+#
+# After that, I trained the model and evaluated its performance
+# using training accuracy, validation accuracy, and test accuracy.
+#
+# Finally, I generated a confusion matrix and plotted accuracy
+# and loss graphs to better understand the model’s performance.
+# ============================================================
+
+
+# ============================================================
 # Assignment 1 - CNN for Image Classification using MNIST
 # ============================================================
 

@@ -84,7 +84,7 @@ index.add(embeddings)
 # 8. Retrieval Function
 # =========================
 def retrieve(query, top_k=3):
-    query_embedding = model.encode([query]).astype("float32")
+    query_embedding = np.array(model.encode([query])).astype("float32")
     distances, indices = index.search(query_embedding, top_k)
 
     return [documents[i] for i in indices[0]]

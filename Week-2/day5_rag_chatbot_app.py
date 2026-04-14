@@ -31,7 +31,6 @@
 # =========================
 # 2. Import Libraries
 # =========================
-import os
 import getpass
 import textwrap
 import numpy as np
@@ -94,17 +93,29 @@ for filename, data in uploaded.items():
 
 print("Total chunks:", len(all_chunks))
 
+if len(all_chunks) == 0:
+    raise ValueError("No text chunks were created. Please upload a valid PDF, TXT, or MD file.")    
+
 # =========================
 # 8. Create Embeddings
 # =========================
 print("Creating embeddings...")
 
-response = client.embeddings.create(
-    model="text-embedding-3-small",
-    input=all_chunks
-)
+all_vectors = []
+batch_size = 20
 
-vectors = np.array([item.embedding for item in response.data], dtype="float32")
+for i in range(0, len(all_chunks), batch_size):
+    batch = all_chunks[i:i + batch_size]
+
+    response = client.embeddings.create(
+        model="text-embedding-3-small",
+        input=batch
+    )
+
+    batch_vectors = [item.embedding for item in response.data]
+    all_vectors.extend(batch_vectors)
+
+vectors = np.array(all_vectors, dtype="float32")
 
 # =========================
 # 9. Store in FAISS

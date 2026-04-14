@@ -34,6 +34,7 @@ import numpy as np
 import faiss
 from openai import OpenAI
 import getpass
+import re
 
 
 # =========================
@@ -85,7 +86,7 @@ index.add(doc_embeddings)
 # 8. Vector Search Function
 # =========================
 def vector_search(query, top_k=3):
-    query_embedding = model.encode([query]).astype("float32")
+    query_embedding = np.array(model.encode([query])).astype("float32")
     distances, indices = index.search(query_embedding, top_k)
 
     results = []
@@ -103,8 +104,8 @@ def keyword_score(query, document):
     """
     Simple keyword score based on overlapping words.
     """
-    query_words = set(query.lower().split())
-    doc_words = set(document.lower().split())
+    query_words = set(re.findall(r"\b\w+\b", query.lower()))
+    doc_words = set(re.findall(r"\b\w+\b", document.lower()))
 
     overlap = query_words.intersection(doc_words)
     return len(overlap)
@@ -120,7 +121,7 @@ def hybrid_search(query, top_k=3, alpha=0.5):
     (1 - alpha) = weight for keyword search
     """
 
-    query_embedding = model.encode([query]).astype("float32")
+    query_embedding = np.array(model.encode([query])).astype("float32")
     distances, indices = index.search(query_embedding, len(documents))
 
     vector_scores = {}

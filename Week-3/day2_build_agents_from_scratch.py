@@ -1,5 +1,5 @@
 # ============================================================
-# Day 2 - Web Scraping Agent with Memory, State, and Tools
+# Week 3 Day 2 - Web Scraping Agent with Memory, State, and Tools
 # ============================================================
 
 # ============================================================
@@ -52,8 +52,12 @@ def fetch_webpage(url):
     """
     Fetch webpage HTML content.
     """
+    headers = {
+        "User-Agent": "Mozilla/5.0"
+    }
+
     try:
-        response = requests.get(url, timeout=10)
+        response = requests.get(url, headers=headers, timeout=10)
         response.raise_for_status()
         return response.text
     except Exception as e:
@@ -69,10 +73,13 @@ def extract_headlines(html):
     soup = BeautifulSoup(html, "html.parser")
 
     headlines = []
+    seen = set()
+
     for tag in soup.find_all(["h1", "h2", "h3"]):
         text = tag.get_text(strip=True)
-        if text:
+        if text and text not in seen:
             headlines.append(text)
+            seen.add(text)
 
     return headlines[:10]
 
@@ -143,16 +150,6 @@ Top Headlines:
 
         all_summaries.append(summary)
 
-        # Update memory and state
-        memory.append({
-            "action": "daily_update",
-            "url": url,
-            "result": summary
-        })
-
-        state["last_action"] = "daily_update"
-        state["last_result"] = summary
-
     return all_summaries
 
 # =========================
@@ -206,7 +203,6 @@ def agent(user_input, urls=None):
         else:
             result = daily_update_agent(urls)
 
-            # Save all summaries to file
             for summary in result:
                 save_update_to_file(summary)
 
@@ -250,6 +246,8 @@ print("- daily update summary")
 print("- show memory")
 print("- show state")
 print("- quit")
+print("\nNote: This works best on static HTML pages.")
+print("Some websites may block scraping or load content dynamically.")
 
 while True:
     print("\n" + "-" * 60)

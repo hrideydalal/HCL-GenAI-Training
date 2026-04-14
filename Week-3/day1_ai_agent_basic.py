@@ -50,19 +50,27 @@ def fetch_wikipedia_summary(topic):
     """
     Fetch short summary from Wikipedia API.
     """
-    url = "https://en.wikipedia.org/api/rest_v1/page/summary/" + topic.replace(" ", "_")
+    clean_topic = topic.strip().replace("?", "").replace("Who is ", "").replace("What is ", "")
+    clean_topic = clean_topic.strip().replace(" ", "_")
+
+    url = "https://en.wikipedia.org/api/rest_v1/page/summary/" + clean_topic
 
     try:
         response = requests.get(url, timeout=10)
 
         if response.status_code != 200:
-            return f"No information found for '{topic}'."
+            return None, f"No information found for '{topic}'."
 
         data = response.json()
-        return data.get("extract", f"No summary available for '{topic}'.")
+        summary = data.get("extract")
+
+        if not summary:
+            return None, f"No summary available for '{topic}'."
+
+        return summary, None
 
     except requests.RequestException as e:
-        return f"Error fetching data: {e}"
+        return None, f"Error fetching data: {e}"
 
 # =========================
 # 6. Agent Function
@@ -75,14 +83,16 @@ def agent(user_query):
 
     print("\n[Agent is thinking...]")
 
-    # For simplicity, use the full query as the topic
-    tool_output = fetch_wikipedia_summary(user_query)
+    tool_output, error = fetch_wikipedia_summary(user_query)
 
     # Store conversation in memory
     memory.append({
         "query": user_query,
-        "tool_output": tool_output
+        "tool_output": tool_output if tool_output else error
     })
+
+    if error:
+        return error
 
     prompt = f"""
 You are a helpful AI agent.

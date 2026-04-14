@@ -131,3 +131,14 @@ for q in questions:
     print("Question:", q)
     print("\nAnswer:")
     print(generate_answer(q))
+
+
+# User Question
+#     ↓
+# Retrieve relevant chunks
+#     ↓
+# Put chunks into prompt
+#     ↓
+# Send to LLM
+#     ↓
+# Generate final answer

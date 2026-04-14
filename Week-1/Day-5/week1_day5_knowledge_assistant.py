@@ -101,12 +101,21 @@ print("Total chunks:", len(all_chunks))
 # =========================
 print("Creating embeddings...")
 
-response = client.embeddings.create(
-    model="text-embedding-3-small",
-    input=all_chunks
-)
+all_vectors = []
+batch_size = 20  # process in small batches
 
-vectors = np.array([item.embedding for item in response.data], dtype="float32")
+for i in range(0, len(all_chunks), batch_size):
+    batch = all_chunks[i:i + batch_size]
+
+    response = client.embeddings.create(
+        model="text-embedding-3-small",
+        input=batch
+    )
+
+    batch_vectors = [item.embedding for item in response.data]
+    all_vectors.extend(batch_vectors)
+
+vectors = np.array(all_vectors, dtype="float32")
 
 # =========================
 # 9. Store in FAISS

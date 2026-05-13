@@ -14,7 +14,11 @@ HCL-GenAI-Training/
 │
 ├── Week-1/
 │   ├── Assignment-1/
-│   ├── Day-5/
+│   │   ├── week1_assignment1_cnn_mnist.py
+│   │   └── week1_assignment1_sentiment_analysis.py
+│   │
+│   └── Day-5/
+│       └── week1_day5_knowledge_assistant.py
 │
 ├── Week-2/
 │   ├── day1_rag_embeddings.py
@@ -26,3 +30,12 @@ HCL-GenAI-Training/
 ├── Week-3/
 │   ├── day1_ai_agent_basic.py
 │   └── day2_build_agents_from_scratch.py
+│
+├── Week-4/
+│   └── day1_test_case_generator_agent.py
+│
+├── Week-5/
+│   └── day5_web_scraper_mailing_agent.py
+│
+├── Week-6/
+│   └── rag_news_articles.py

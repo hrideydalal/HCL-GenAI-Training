@@ -1,4 +1,4 @@
-# HCL-GenAI-Training
+# GenAI-Training
 
 This repository contains my work from AI and Machine Learning training, including structured notes, practical exercises, coding assignments, Retrieval-Augmented Generation (RAG) tasks, and agent-based projects. It serves as a centralized place to organize all my learning materials and track progress throughout the program.
 

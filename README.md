@@ -28,14 +28,14 @@ HCL-GenAI-Training/
 │   └── day5_rag_chatbot_app.py
 │
 ├── Week-3/
-│   ├── day1_ai_agent_basic.py
-│   └── day2_build_agents_from_scratch.py
+│   ├── day3_ai_agent_basic.py
+│   └── day5_build_agents_from_scratch.py
 │
 ├── Week-4/
-│   └── day1_test_case_generator_agent.py
+│   └── test_case_generator_agent.py
 │
 ├── Week-5/
-│   └── day5_web_scraper_mailing_agent.py
+│   └── web_scraper_mailing_agent.py
 │
 ├── Week-6/
 │   └── rag_news_articles.py
